@@ -1,0 +1,17 @@
+version: '3.8'
+services:
+  webserver:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+    volumes:
+      - ./web:/usr/share/nginx/html:ro
+  check-status:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - URL=http://webserver
+      - MAILTO=muroslavkl@gmail.com
+    depends_on:
+      - webserver
